@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { FaMapMarkerAlt, FaDollarSign, FaFileAlt, FaArrowRight } from 'react-icons/fa';
 import './JobListings.css';
 
 export default function JobListings() {
@@ -7,8 +9,6 @@ export default function JobListings() {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    // TODO: Fetch jobs from backend
-    // Placeholder data
     const mockJobs = [
       {
         id: 1,
@@ -53,11 +53,35 @@ export default function JobListings() {
 
   const filteredJobs = filter === 'all' ? jobs : jobs.filter(job => job.role === filter);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
+  };
+
+  const cardVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } }
+  };
+
   return (
     <div className="job-listings-page">
-      <h2>Available Jobs</h2>
+      <motion.h2
+        initial={{ opacity: 0, y: -30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        Available Jobs
+      </motion.h2>
 
-      <div className="filter-section">
+      <motion.div 
+        className="filter-section"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2, duration: 0.5 }}
+      >
         <select value={filter} onChange={(e) => setFilter(e.target.value)}>
           <option value="all">All Roles</option>
           <option value="backend">Backend Developer</option>
@@ -65,27 +89,84 @@ export default function JobListings() {
           <option value="full-stack">Full Stack Developer</option>
           <option value="devops">DevOps Engineer</option>
         </select>
-      </div>
+      </motion.div>
 
       {loading ? (
-        <p>Loading jobs...</p>
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          Loading jobs...
+        </motion.p>
       ) : (
-        <div className="jobs-list">
+        <motion.div 
+          className="jobs-list"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           {filteredJobs.length > 0 ? (
             filteredJobs.map((job) => (
-              <div key={job.id} className="job-card">
-                <h3>{job.title}</h3>
+              <motion.div 
+                key={job.id} 
+                className="job-card"
+                variants={cardVariants}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="job-header">
+                  <h3>{job.title}</h3>
+                  <motion.div
+                    className="job-status"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  >
+                    New
+                  </motion.div>
+                </div>
+                
                 <p className="company">{job.company}</p>
-                <p className="location">📍 {job.location}</p>
-                <p className="salary">💰 {job.salary}</p>
+
+                <div className="job-details">
+                  <motion.div 
+                    className="detail-item"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 }}
+                  >
+                    <FaMapMarkerAlt /> {job.location}
+                  </motion.div>
+                  <motion.div 
+                    className="detail-item"
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <FaDollarSign /> {job.salary}
+                  </motion.div>
+                </div>
+
                 <p className="description">{job.description}</p>
-                <button className="apply-btn">Apply Now</button>
-              </div>
+
+                <motion.button 
+                  className="apply-btn"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Apply Now <FaArrowRight style={{ marginLeft: '8px' }} />
+                </motion.button>
+              </motion.div>
             ))
           ) : (
-            <p>No jobs found for this role.</p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              No jobs found for this role.
+            </motion.p>
           )}
-        </div>
+        </motion.div>
       )}
     </div>
   );

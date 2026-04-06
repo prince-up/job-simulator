@@ -5,18 +5,24 @@ import RoleSelection from './pages/RoleSelection';
 import SkillsAssessment from './pages/SkillsAssessment';
 import JobListings from './pages/JobListings';
 import Navigation from './components/Navigation';
+import Footer from './components/Footer';
 
 export default function App() {
   return (
     <Router>
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/role-selection" element={<RoleSelection />} />
-        <Route path="/skills-assessment" element={<SkillsAssessment />} />
-        <Route path="/jobs" element={<JobListings />} />
-      </Routes>
+      <div className="app-wrapper">
+        <Navigation />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/role-selection" element={<RoleSelection />} />
+            <Route path="/skills-assessment" element={<SkillsAssessment />} />
+            <Route path="/jobs" element={<JobListings />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
     </Router>
   );
 }
