@@ -12,7 +12,12 @@
   color: white;
   font-size: 2.5rem;
   font-weight: 800;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(90deg, #00d4ff 0%, #ff006e 50%, #d60cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient 4s ease infinite;
 }
 
 .roles-grid {
@@ -24,14 +29,15 @@
 
 .role-card {
   padding: 2.5rem;
-  background: white;
-  border: 3px solid #e0e0e0;
+  background: linear-gradient(135deg, rgba(10, 10, 25, 0.8) 0%, rgba(20, 5, 35, 0.8) 100%);
+  border: 3px solid rgba(0, 212, 255, 0.4);
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(10px);
 }
 
 .role-card::before {
@@ -41,7 +47,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
   transition: left 0.5s ease;
   pointer-events: none;
 }
@@ -51,17 +57,17 @@
 }
 
 .role-card:hover {
-  box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
-  border-color: #667eea;
+  box-shadow: 0 20px 50px rgba(0, 255, 255, 0.3), 0 0 30px rgba(255, 0, 127, 0.2);
+  border-color: #00d4ff;
   transform: translateY(-8px);
-  background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(255, 0, 127, 0.15) 100%);
 }
 
 .role-card.selected {
-  border-color: #667eea;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #00d4ff;
+  background: linear-gradient(135deg, #00d4ff 0%, #ff006e 50%, #d60cff 100%);
   color: white;
-  box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 212, 255, 0.4), 0 0 30px rgba(255, 0, 127, 0.3);
   transform: scale(1.05);
 }
 
@@ -72,30 +78,33 @@
 
 .role-icon-wrapper {
   font-size: 3.5rem;
-  color: #667eea;
+  color: #00d4ff;
   margin-bottom: 1.5rem;
   transition: transform 0.3s ease;
   display: inline-block;
+  filter: drop-shadow(0 0 8px rgba(0, 255, 255, 0.6));
 }
 
 .role-card:hover .role-icon-wrapper {
   transform: scale(1.2) rotate(5deg);
+  filter: drop-shadow(0 0 12px rgba(0, 255, 255, 0.8));
 }
 
 .role-card.selected .role-icon-wrapper {
   color: white;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
 }
 
 .role-card h3 {
   margin: 1.5rem 0 0.5rem;
-  color: #333;
+  color: #00d4ff;
   font-size: 1.3rem;
   font-weight: 700;
   transition: color 0.3s ease;
 }
 
 .role-card p {
-  color: #666;
+  color: #bbb;
   font-size: 0.95rem;
   line-height: 1.6;
   transition: color 0.3s ease;
@@ -107,19 +116,26 @@
   right: 15px;
   width: 36px;
   height: 36px;
-  background: white;
-  color: #667eea;
+  background: #00d4ff;
+  color: #000;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 1.2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.6);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 212, 255, 0.6); }
+  50% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.9); }
 }
 
 .role-card.selected .selected-badge {
   background: white;
+  color: #00d4ff;
 }
 
 .continue-btn {
